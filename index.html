@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>💘 Sürpriz Mini Site</title>
+  <meta name="description" content="Sevgiline renkli, eğlenceli ve romantik mini web sürprizi" />
+  <style>
+    :root{
+      --bg-1:#ff6ec7; /* pembe */
+      --bg-2:#6e7bff; /* mor/mavi */
+      --bg-3:#00c9a7; /* turkuaz */
+      --card: rgba(255,255,255,.2);
+      --glass: blur(8px) saturate(140%);
+      --text:#111;
+      --light:#fff;
+      --accent:#ffb703;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%;}
+    body{
+      margin:0; font-family: ui-rounded, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      color:var(--light);
+      overflow-x:hidden;
+      background: linear-gradient(135deg,var(--bg-1),var(--bg-2),var(--bg-3));
+      background-size: 600% 600%;
+      animation:bgMove 16s ease infinite;
+    }
+    @keyframes bgMove{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+
+    .wrap{max-width:960px; margin:0 auto; padding:24px;}
+
+    header{
+      text-align:center; margin:18px 0 8px;
+    }
+    h1{
+      font-size: clamp(28px, 5vw, 54px);
+      margin:0; line-height:1.05; font-weight:900;
+      letter-spacing:.5px;
+      text-shadow: 0 6px 30px rgba(0,0,0,.25);
+    }
+    h1 .rainbow{background:linear-gradient(90deg,#ff005c,#ffb703,#40f99b,#00bbf0,#c77dff);-webkit-background-clip:text;background-clip:text;color:transparent}
+    p.lead{opacity:.92; font-size: clamp(14px,2.4vw,18px)}
+
+    .card{
+      backdrop-filter: var(--glass);
+      background: var(--card);
+      border:1px solid rgba(255,255,255,.25);
+      border-radius:24px; padding:18px; margin:18px 0;
+      box-shadow: 0 10px 40px rgba(0,0,0,.25);
+    }
+    .grid{display:grid; gap:16px}
+    @media(min-width:860px){.grid{grid-template-columns:1.1fr 1fr}}
+
+    .btn{
+      appearance:none; border:none; cursor:pointer;
+      padding:14px 18px; border-radius:999px; font-weight:700;
+      background: linear-gradient(90deg,#ffd166,#ef476f); color:#111;
+      box-shadow: 0 10px 24px rgba(0,0,0,.25);
+      transform: translateY(0); transition: transform .08s ease, box-shadow .2s ease;
+    }
+    .btn:hover{transform: translateY(-2px)}
+
+    .meter{width:100%; -webkit-appearance:none; appearance:none; height:18px; border-radius:999px; background:rgba(255,255,255,.35); outline:none}
+    .meter::-webkit-slider-thumb{ -webkit-appearance:none; appearance:none; width:28px; height:28px; border-radius:50%; background:#fff; box-shadow: 0 0 0 4px rgba(255,255,255,.35)}
+    .meter::-moz-range-thumb{ width:28px; height:28px; border-radius:50%; background:#fff; border:none}
+
+    .pill{display:inline-block; padding:8px 14px; border-radius:999px; background:rgba(255,255,255,.25); font-weight:700}
+
+    .compliment{font-size:clamp(18px,3.4vw,22px); font-weight:800}
+
+    .footer{opacity:.8; font-size:13px; text-align:center; margin:18px 0}
+
+    /* Floating hearts */
+    .heart{position:fixed; bottom:-40px; pointer-events:none; animation: floatUp linear forwards;}
+    @keyframes floatUp{to{transform:translateY(-120vh) rotate(360deg); opacity:0}}
+
+    /* Fireworks canvas */
+    canvas#fx{position:fixed; inset:0; pointer-events:none}
+
+    /* tiny pulse */
+    .pulse{animation:pulse 1.2s ease-in-out infinite}
+    @keyframes pulse{0%{transform:scale(1)}50%{transform:scale(1.05)}100%{transform:scale(1)}}
+
+    .hidden{display:none}
+  </style>
+</head>
+<body>
+  <canvas id="fx"></canvas>
+  <div class="wrap">
+    <header>
+      <h1>
+        <span class="rainbow">Merhaba <span id="who">Sevgilim</span> 💖</span>
+      </h1>
+      <p class="lead">Yoğun renkler, dengeli mutluluk ve bol kahkaha modu aktif. Hazır mısın? 😎</p>
+    </header>
+
+    <section class="grid">
+      <!-- Sol taraf -->
+      <div class="card">
+        <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap; justify-content:space-between">
+          <span class="pill">Mini Görev: Gülümse 😁</span>
+          <button id="btnConfetti" class="btn">Kutlama Yap 🎉</button>
+        </div>
+        <hr style="border:none; height:1px; background:rgba(255,255,255,.35); margin:14px 0">
+        <div>
+          <p style="margin:.2rem 0 .6rem">Bugün seni <b><span id="percent">0</span>%</b> özledim.</p>
+          <button id="btnCount" class="btn">Şişir bakalım bu oranı 📈</button>
+        </div>
+
+        <div style="margin-top:16px">
+          <label for="meter"><b>Aşk Metre</b> (bitince patlayacak 😏)</label>
+          <input id="meter" class="meter" type="range" min="0" max="100" value="24"/>
+          <div id="meterLabel" style="margin-top:6px; font-weight:800">%24 - Isınıyoruz 🔥</div>
+        </div>
+      </div>
+
+      <!-- Sağ taraf -->
+      <div class="card">
+        <div style="display:flex; gap:10px; align-items:center; justify-content:space-between; flex-wrap:wrap">
+          <span class="pill">Rastgele İlgi Bombası 💌</span>
+          <button id="btnCompliment" class="btn">Bir tane daha söyle ✨</button>
+        </div>
+        <div style="margin-top:12px" class="compliment" id="compliment">Bugün senin günün: gülüşün şehir ışıklarını kıskandırıyor! 🌃</div>
+
+        <hr style="border:none; height:1px; background:rgba(255,255,255,.35); margin:14px 0">
+        <div>
+          <p style="margin:.2rem 0 .6rem; font-weight:700">Mini Soru: Benimle kahve? ☕</p>
+          <div style="display:flex; gap:10px; flex-wrap:wrap">
+            <button class="btn quiz" data-a="Evet">Evet</button>
+            <button class="btn quiz" data-a="Kesinlikle">Kesinlikle</button>
+            <button class="btn quiz" data-a="Tabii ki">Tabii ki</button>
+          </div>
+          <p id="quizOut" style="margin-top:10px; font-weight:800" class="hidden"></p>
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <div style="display:flex; gap:10px; align-items:center; justify-content:space-between; flex-wrap:wrap">
+        <span class="pill">Gizli Mesaj 🔐</span>
+        <button id="btnReveal" class="btn">Göster 👀</button>
+      </div>
+      <p id="secret" class="hidden" style="font-size:clamp(18px,3.4vw,22px); font-weight:900; margin-top:10px">
+        Sürpriz: Sen + Ben = Biz. Bugün, yarın ve hep. 💞
+      </p>
+    </section>
+
+    <footer class="footer">
+      <span>Bu sayfadaki tüm efektler saf HTML/CSS/JS ile yapıldı. { <span class="rainbow">renkli aşk</span> } modu 💫</span>
+    </footer>
+  </div>
+
+  <script>
+    // Yardımcı: URL'den ?name= parametresi ile kişiselleştir
+    const params = new URLSearchParams(location.search);
+    const who = params.get('name')?.trim();
+    if(who){ document.getElementById('who').textContent = who; }
+
+    // Renkli kalpler üretimi
+    function spawnHeart(){
+      const h = document.createElement('div');
+      h.className = 'heart';
+      const size = Math.random()*18 + 12; // 12-30px
+      h.style.left = (Math.random()*100) + 'vw';
+      h.style.fontSize = size + 'px';
+      h.style.animationDuration = (Math.random()*4 + 6) + 's';
+      h.style.filter = `drop-shadow(0 6px 12px rgba(0,0,0,.25))`;
+      h.innerHTML = Math.random()>.3 ? '💖' : (Math.random()>.5 ? '💜' : '💘');
+      document.body.appendChild(h);
+      setTimeout(()=>h.remove(), 12000);
+    }
+    setInterval(spawnHeart, 900);
+
+    // Confetti (çok basit parçacık)
+    function confettiBurst(){
+      for(let i=0;i<140;i++){
+        const d=document.createElement('div');
+        d.style.position='fixed';
+        d.style.left = (innerWidth/2) + 'px';
+        d.style.top = (innerHeight/3) + 'px';
+        d.style.width = d.style.height = (Math.random()*6+4)+'px';
+        d.style.background = `hsl(${Math.random()*360}, 90%, 60%)`;
+        d.style.transform = `translate(-50%,-50%) rotate(${Math.random()*360}deg)`;
+        d.style.borderRadius = Math.random()>.5 ? '2px' : '50%';
+        d.style.pointerEvents='none';
+        d.style.zIndex=9999;
+        const dx = (Math.random()-0.5)*12;
+        const dy = (Math.random()-0.7)*14;
+        const ax = (Math.random()-0.5)*.02;
+        const ay = .18;
+        let x=0,y=0,vx=dx,vy=dy,life=0;
+        const tick=()=>{
+          vx+=ax; vy+=ay; x+=vx; y+=vy; life+=1;
+          d.style.transform = `translate(calc(-50% + ${x}px), calc(-50% + ${y}px)) rotate(${life*8}deg)`;
+          if(life>90){ d.remove(); clearInterval(t); }
+        }
+        const t=setInterval(tick, 16);
+        document.body.appendChild(d);
+      }
+    }
+
+    document.getElementById('btnConfetti').addEventListener('click', confettiBurst);
+
+    // Yüzde sayaç
+    const percentEl = document.getElementById('percent');
+    let target = 143; // hafif komik bir sayı
+    document.getElementById('btnCount').addEventListener('click', ()=>{
+      const now = parseInt(percentEl.textContent)||0;
+      const end = target;
+      const diff = end - now;
+      const steps = 40; let i=0;
+      const t=setInterval(()=>{
+        const val = Math.round(now + (diff*(i/steps)));
+        percentEl.textContent = Math.min(val, end);
+        if(i++>=steps){ clearInterval(t); percentEl.classList.add('pulse'); setTimeout(()=>percentEl.classList.remove('pulse'), 1200); confettiBurst();}
+      }, 24);
+    });
+
+    // Aşk metre
+    const meter = document.getElementById('meter');
+    const meterLabel = document.getElementById('meterLabel');
+    meter.addEventListener('input', ()=>{
+      const v = +meter.value;
+      meterLabel.textContent = `%${v} - ${(v<40? 'Isınıyoruz 🔥' : v<80? 'Tam Ayar 💟' : 'Taşıyor 😍')}`;
+    });
+    meter.addEventListener('change', ()=>{
+      meter.value = 100; meter.dispatchEvent(new Event('input'));
+      boom();
+    });
+
+    // İlgi/iltifat üretici
+    const compliments = [
+      'Gülüşün şehir aydınlatmasına rakip. 🌆',
+      'Sen yürürken arka planda soundtrack çalıyor gibi. 🎵',
+      'Wifi gibi: yakınında her şey daha hızlı ve güzel. 📶',
+      'Kahve + Sen = kusursuz ikili. ☕💫',
+      'Gözlerin: HD, bakışların: 4K. 👀',
+      'Moralim %100 olduğunda bile sen gelince %120 oluyor. 💯',
+      'Fotoğraf filtresi gibi: her şey seni görünce güzelleşiyor. 🎨',
+      'Yanındayken zaman “turbo modda” akıyor. ⏱️',
+      'Soğuk günlere sıcak yükseltmesi getiriyorsun. 🔥🧣',
+      'Bugünün en iyi kısmı: senin aklıma gelişin. 💭💗'
+    ];
+    function nextCompliment(){
+      document.getElementById('compliment').textContent = compliments[Math.floor(Math.random()*compliments.length)];
+    }
+    document.getElementById('btnCompliment').addEventListener('click', nextCompliment);
+
+    // Quiz
+    document.querySelectorAll('.quiz').forEach(b=>{
+      b.addEventListener('click', (e)=>{
+        const a = e.currentTarget.dataset.a;
+        const out = document.getElementById('quizOut');
+        out.textContent = `${a}! Randevuyu ben ayarlıyorum, mekan: “Yanım”. 💘`;
+        out.classList.remove('hidden');
+        confettiBurst(); boom();
+      })
+    })
+
+    // Gizli mesaj
+    document.getElementById('btnReveal').addEventListener('click', ()=>{
+      document.getElementById('secret').classList.toggle('hidden');
+      boom();
+    });
+
+    // Basit havai fişek efekti (canvas)
+    const c = document.getElementById('fx');
+    const ctx = c.getContext('2d');
+    function size(){ c.width = innerWidth; c.height = innerHeight; }
+    addEventListener('resize', size); size();
+
+    let particles = [];
+    function boom(){
+      const cx = innerWidth * (0.2 + Math.random()*0.6);
+      const cy = innerHeight * (0.3 + Math.random()*0.4);
+      const n = 90;
+      for(let i=0;i<n;i++){
+        const a = (Math.PI*2)*i/n;
+        const sp = 2 + Math.random()*4;
+        particles.push({x:cx,y:cy,vx:Math.cos(a)*sp,vy:Math.sin(a)*sp,life:0,h:Math.random()*360});
+      }
+    }
+
+    function tick(){
+      ctx.clearRect(0,0,c.width,c.height);
+      for(let i=particles.length-1;i>=0;i--){
+        const p = particles[i];
+        p.x += p.vx; p.y += p.vy; p.vy += 0.04; p.vx *= .99; p.vy *= .99; p.life++;
+        ctx.fillStyle = `hsl(${p.h}, 90%, ${70 - p.life*.5}%)`;
+        ctx.beginPath(); ctx.arc(p.x,p.y,2,0,Math.PI*2); ctx.fill();
+        if(p.life>120) particles.splice(i,1);
+      }
+      requestAnimationFrame(tick);
+    }
+    tick();
+
+    // İlk yüklemede ufak kutlama
+    setTimeout(()=>{ nextCompliment(); boom(); }, 800);
+  </script>
+</body>
+</html>
