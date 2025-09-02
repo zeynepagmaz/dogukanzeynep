@@ -71,14 +71,11 @@
 
     .footer{opacity:.8; font-size:13px; text-align:center; margin:18px 0}
 
-    /* Floating hearts */
     .heart{position:fixed; bottom:-40px; pointer-events:none; animation: floatUp linear forwards;}
     @keyframes floatUp{to{transform:translateY(-120vh) rotate(360deg); opacity:0}}
 
-    /* Fireworks canvas */
     canvas#fx{position:fixed; inset:0; pointer-events:none}
 
-    /* tiny pulse */
     .pulse{animation:pulse 1.2s ease-in-out infinite}
     @keyframes pulse{0%{transform:scale(1)}50%{transform:scale(1.05)}100%{transform:scale(1)}}
 
@@ -92,7 +89,7 @@
       <h1>
         <span class="rainbow">Canımmm <span id="who">Sevgilimmmmm</span> 💖</span>
       </h1>
-      <p class="lead">Bu sitede her zaman ateşli aşkımız aktif 🔥</p>
+      <p class="lead">Bu sitede her zaman aşkımız aktif 🔥</p>
     </header>
 
     <section class="grid">
@@ -114,7 +111,6 @@
         </div>
       </div>
 
-      <!-- Sağ taraf -->
       <div class="card">
         <div style="display:flex; gap:10px; align-items:center; justify-content:space-between; flex-wrap:wrap">
           <span class="pill">Rastgele İlgi Bombası 💌</span>
@@ -146,7 +142,7 @@
     </section>
 
     <footer class="footer">
-      <span>Bu sayfadaki tüm efektler saf HTML/CSS/JS ile yapıldı. { <span class="rainbow">renkli aşk</span> } modu 💫</span>
+      <span>Bu sayfadaki tüm her şey aşk ile yapıldı. { <span class="rainbow">renkli aşk</span> } modu 💫</span>
     </footer>
   </div>
 
@@ -226,14 +222,14 @@
 
     const compliments = [
       'Gülüşün bir ömre bedel 😄',
-      'Sana çok fena azıyorum 🥵',
-      'senin yanında her şey en güzeli 🥰',
+      'Sana çok aşığım 🥵',
+      'Senin yanında her şey en güzeli 🥰',
       'Sen demek aşk demek 💫',
       'Bakışlarına ölürüm 🫶​',
       'Seni çok özledim 😭​',
       'Her şey seni görünce güzelleşiyor 💥',
       'Yanındayken zaman aşırı hızlı akıyor. ⏱️',
-      'Ateşinden yanıyorum 🔥',
+      'Aşkım 🔥',
       'Seni çok seviyorum 💙'
     ];
     function nextCompliment(){
